@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_padding_1x">8dp</dimen>
+    <dimen name="common_padding_2x">16dp</dimen>
+    <dimen name="common_padding_3x">24dp</dimen>
+    <dimen name="iv_card_height">200dp</dimen>
+</resources>
