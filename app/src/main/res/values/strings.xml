@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Tiendas</string>
     <string name="description_iv_photo_store">Store\'s image</string>
+    <string name="description_add_store">Add store</string>
 </resources>
