@@ -1,6 +1,11 @@
 package com.olascoaga.stores
 
-data class Store(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "StoreEntity")
+data class StoreEntity(
+    @PrimaryKey(true)
     var id: Long = 0,
     var name: String,
     var phone: String = "",
