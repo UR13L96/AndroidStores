@@ -19,6 +19,11 @@ class MainActivity: AppCompatActivity(), OnClickListener {
             val storeEntity = StoreEntity(
                 name = mBinding.etName.text.toString().trim()
             )
+
+            Thread {
+                StoreApplication.database.storeDao().addStore(storeEntity)
+            }.start()
+
             mAdapter.add(storeEntity)
         }
 
