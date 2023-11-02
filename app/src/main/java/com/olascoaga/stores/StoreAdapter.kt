@@ -27,6 +27,7 @@ class StoreAdapter(
         val store = stores[position]
         with(holder) {
             binding.tvName.text = store.name
+            binding.cbFavorite.isChecked = store.isFavorite
             setListener(store)
         }
     }
@@ -41,12 +42,25 @@ class StoreAdapter(
         notifyDataSetChanged()
     }
 
+    fun update(storeEntity: StoreEntity) {
+        val index = stores.indexOf(storeEntity)
+
+        if (index != -1) {
+            stores.set(index, storeEntity)
+            notifyItemChanged(index)
+        }
+    }
+
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val binding = ItemStoreBinding.bind(view)
 
         fun setListener(storeEntity: StoreEntity) {
             binding.root.setOnClickListener {
                 listener.onClick(storeEntity)
+            }
+
+            binding.cbFavorite.setOnClickListener {
+                listener.onFavoriteClicked(storeEntity)
             }
         }
     }
