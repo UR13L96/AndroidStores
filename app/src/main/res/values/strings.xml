@@ -4,4 +4,6 @@
     <string name="description_add_store">Add store</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_name">Store name</string>
+    <string name="helper_required">Required</string>
 </resources>
