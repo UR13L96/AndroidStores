@@ -74,6 +74,45 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/common_padding_2x"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_photo_url"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/hint_photo_url"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/ic_link">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_photo_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="@integer/lines_url_photo"
+                    android:maxLines="@integer/lines_url_photo"
+                    android:textAppearance="?attr/textAppearanceCaption"
+                    android:textColor="@color/color_link"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:layout_marginStart="@dimen/common_padding_1x"
+                android:id="@+id/iv_photo"
+                android:layout_width="@dimen/photo_size_thumb"
+                android:layout_height="@dimen/photo_size_thumb"
+                android:src="@drawable/ic_image"
+                android:contentDescription="@string/description_iv_photo_store"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
