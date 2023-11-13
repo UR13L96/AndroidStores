@@ -11,4 +11,6 @@
     <string name="hint_photo_url">Photo URL</string>
     <string name="form_store_title_add">Create store</string>
     <string name="menu_save">Save</string>
+    <string name="save">Save</string>
+    <string name="form_store_message_success">Store saved correctly</string>
 </resources>
