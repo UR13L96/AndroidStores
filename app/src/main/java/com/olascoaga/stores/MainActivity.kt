@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.olascoaga.stores.databinding.ActivityMainBinding
 import java.util.concurrent.LinkedBlockingQueue
 
-class MainActivity: AppCompatActivity(), OnClickListener {
+class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: StoreAdapter
     private lateinit var mGridLayout: GridLayoutManager
@@ -32,7 +32,7 @@ class MainActivity: AppCompatActivity(), OnClickListener {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
-        mBinding.fabAdd.hide()
+        changeFABVisibility(false)
     }
 
     private fun setupRecyclerView() {
@@ -80,5 +80,17 @@ class MainActivity: AppCompatActivity(), OnClickListener {
         }.start()
 
         mAdapter.delete(queue.take())
+    }
+
+    /*
+     * MainAux
+     */
+
+    override fun changeFABVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            mBinding.fabAdd.show()
+        } else {
+            mBinding.fabAdd.hide()
+        }
     }
 }

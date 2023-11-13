@@ -65,4 +65,13 @@ class FormStoreFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroy() {
+        mActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mActivity?.supportActionBar?.title = getString(R.string.app_name)
+        mActivity?.changeFABVisibility(true)
+
+        setHasOptionsMenu(false)
+        super.onDestroy()
+    }
 }
