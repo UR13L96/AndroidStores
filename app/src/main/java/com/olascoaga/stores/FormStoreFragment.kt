@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.snackbar.Snackbar
 import com.olascoaga.stores.databinding.FragmentFormStoreBinding
+import java.util.concurrent.LinkedBlockingQueue
 
 class FormStoreFragment : Fragment() {
     private lateinit var mBinding: FragmentFormStoreBinding
@@ -33,11 +34,25 @@ class FormStoreFragment : Fragment() {
         setHasOptionsMenu(true)
 
         mBinding.btnSave.setOnClickListener {
-            Snackbar.make(
-                mBinding.root,
-                getString(R.string.form_store_message_success),
-                Snackbar.LENGTH_SHORT
-            ).show()
+            val store = StoreEntity(
+                name =  mBinding.etName.text.toString().trim(),
+                phone = mBinding.etPhone.text.toString().trim(),
+                website = mBinding.etWebsite.text.toString().trim()
+            )
+
+            val queue = LinkedBlockingQueue<Long?>()
+            Thread {
+                val storeId = StoreApplication.database.storeDao().addStore(store)
+                queue.add(storeId)
+            }.start()
+
+            queue.take()?.let {
+                Snackbar.make(
+                    mBinding.root,
+                    getString(R.string.form_store_message_success),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -53,11 +68,25 @@ class FormStoreFragment : Fragment() {
                 true
             }
             R.id.action_save -> {
-                Snackbar.make(
-                    mBinding.root,
-                    getString(R.string.form_store_message_success),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                val store = StoreEntity(
+                    name =  mBinding.etName.text.toString().trim(),
+                    phone = mBinding.etPhone.text.toString().trim(),
+                    website = mBinding.etWebsite.text.toString().trim()
+                )
+
+                val queue = LinkedBlockingQueue<Long?>()
+                Thread {
+                    val storeId = StoreApplication.database.storeDao().addStore(store)
+                    queue.add(storeId)
+                }.start()
+
+                queue.take()?.let {
+                    Snackbar.make(
+                        mBinding.root,
+                        getString(R.string.form_store_message_success),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
                 true
             }
             else -> {
