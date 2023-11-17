@@ -1,5 +1,6 @@
 package com.olascoaga.stores
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import com.google.android.material.snackbar.Snackbar
 import com.olascoaga.stores.databinding.FragmentFormStoreBinding
 import java.util.concurrent.LinkedBlockingQueue
@@ -47,11 +50,14 @@ class FormStoreFragment : Fragment() {
             }.start()
 
             queue.take()?.let {
+                hideKeyboard()
                 Snackbar.make(
                     mBinding.root,
                     getString(R.string.form_store_message_success),
                     Snackbar.LENGTH_SHORT
                 ).show()
+
+                mActivity?.onBackPressedDispatcher?.onBackPressed()
             }
         }
     }
@@ -81,11 +87,14 @@ class FormStoreFragment : Fragment() {
                 }.start()
 
                 queue.take()?.let {
+                    hideKeyboard()
                     Snackbar.make(
                         mBinding.root,
                         getString(R.string.form_store_message_success),
                         Snackbar.LENGTH_SHORT
                     ).show()
+
+                    mActivity?.onBackPressedDispatcher?.onBackPressed()
                 }
                 true
             }
@@ -93,6 +102,16 @@ class FormStoreFragment : Fragment() {
                 return super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethod = mActivity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethod.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    override fun onDestroyView() {
+        hideKeyboard()
+        super.onDestroyView()
     }
 
     override fun onDestroy() {
