@@ -93,4 +93,12 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
             mBinding.fabAdd.hide()
         }
     }
+
+    override fun addStore(storeEntity: StoreEntity) {
+        mAdapter.add(storeEntity)
+    }
+
+    override fun updateStore(storeEntity: StoreEntity) {
+
+    }
 }

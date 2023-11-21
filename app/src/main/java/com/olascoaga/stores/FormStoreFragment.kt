@@ -50,6 +50,7 @@ class FormStoreFragment : Fragment() {
             }.start()
 
             queue.take()?.let {
+                mActivity?.addStore(store)
                 hideKeyboard()
                 Snackbar.make(
                     mBinding.root,
