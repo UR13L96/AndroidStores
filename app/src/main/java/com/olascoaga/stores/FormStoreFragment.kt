@@ -11,6 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethod
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import com.olascoaga.stores.databinding.FragmentFormStoreBinding
 import java.util.concurrent.LinkedBlockingQueue
@@ -36,6 +40,14 @@ class FormStoreFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+        mBinding.etPhotoUrl.addTextChangedListener {
+            Glide.with(this)
+                .load(mBinding.etPhotoUrl.text.toString().trim())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .into(mBinding.ivPhoto)
+        }
+
         mBinding.btnSave.setOnClickListener {
             val store = StoreEntity(
                 name =  mBinding.etName.text.toString().trim(),
@@ -53,11 +65,7 @@ class FormStoreFragment : Fragment() {
                 store.id = it
                 mActivity?.addStore(store)
                 hideKeyboard()
-                Snackbar.make(
-                    mBinding.root,
-                    getString(R.string.form_store_message_success),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                Toast.makeText(mActivity, R.string.form_store_message_success, Toast.LENGTH_SHORT).show()
 
                 mActivity?.onBackPressedDispatcher?.onBackPressed()
             }
@@ -92,11 +100,7 @@ class FormStoreFragment : Fragment() {
                     store.id = it
                     mActivity?.addStore(store)
                     hideKeyboard()
-                    Snackbar.make(
-                        mBinding.root,
-                        getString(R.string.form_store_message_success),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(mActivity, R.string.form_store_message_success, Toast.LENGTH_SHORT).show()
 
                     mActivity?.onBackPressedDispatcher?.onBackPressed()
                 }
