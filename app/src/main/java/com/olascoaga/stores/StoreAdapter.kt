@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.olascoaga.stores.databinding.ItemStoreBinding
 
 class StoreAdapter(
@@ -29,6 +31,12 @@ class StoreAdapter(
             binding.tvName.text = store.name
             binding.cbFavorite.isChecked = store.isFavorite
             setListener(store)
+
+            Glide.with(mContext)
+                .load(store.imageURL)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .into(binding.ivPhoto)
         }
     }
 

@@ -52,7 +52,8 @@ class FormStoreFragment : Fragment() {
             val store = StoreEntity(
                 name =  mBinding.etName.text.toString().trim(),
                 phone = mBinding.etPhone.text.toString().trim(),
-                website = mBinding.etWebsite.text.toString().trim()
+                website = mBinding.etWebsite.text.toString().trim(),
+                imageURL = mBinding.etPhotoUrl.text.toString().trim()
             )
 
             val queue = LinkedBlockingQueue<Long?>()
@@ -87,7 +88,8 @@ class FormStoreFragment : Fragment() {
                 val store = StoreEntity(
                     name =  mBinding.etName.text.toString().trim(),
                     phone = mBinding.etPhone.text.toString().trim(),
-                    website = mBinding.etWebsite.text.toString().trim()
+                    website = mBinding.etWebsite.text.toString().trim(),
+                    imageURL = mBinding.etPhotoUrl.text.toString().trim()
                 )
 
                 val queue = LinkedBlockingQueue<Long?>()
