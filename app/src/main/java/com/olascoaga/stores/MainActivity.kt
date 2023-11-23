@@ -23,11 +23,12 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
         setupRecyclerView()
     }
 
-    private fun showStoreFragment() {
+    private fun showStoreFragment(args: Bundle? = null) {
         val fragment = FormStoreFragment()
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
+        fragment.arguments = args
         fragmentTransaction.add(R.id.cl_main, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
@@ -56,8 +57,11 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
         mAdapter.setStores(queue.take())
     }
 
-    override fun onClick(storeEntity: StoreEntity) {
+    override fun onClick(storeId: Long) {
+        val args = Bundle()
+        args.putLong(getString(R.string.arg_id), storeId)
 
+        showStoreFragment(args)
     }
 
     override fun onFavoriteClicked(storeEntity: StoreEntity) {
