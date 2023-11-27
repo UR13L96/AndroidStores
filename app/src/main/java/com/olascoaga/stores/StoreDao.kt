@@ -19,4 +19,7 @@ interface StoreDao {
 
      @Delete
      fun deleteStore(storeEntity: StoreEntity)
+
+     @Query("SELECT * FROM StoreEntity where id = :id")
+     fun getStore(id: Long): StoreEntity
 }
