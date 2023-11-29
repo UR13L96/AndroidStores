@@ -90,8 +90,23 @@ class FormStoreFragment : Fragment() {
             queue.add(mStoreEntity)
         }.start()
         queue.take()?.let {
-
+            setUIStore(it)
         }
+    }
+
+    private fun setUIStore(store: StoreEntity) {
+        with(mBinding) {
+            etName.setText(store.name)
+            etPhone.setText(store.phone)
+            etWebsite.setText(store.website)
+            etPhotoUrl.setText(store.imageURL)
+        }
+
+        Glide.with(this)
+            .load(store.imageURL)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
+            .into(mBinding.ivPhoto)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
