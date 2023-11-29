@@ -2,6 +2,7 @@ package com.olascoaga.stores
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -35,14 +36,6 @@ class FormStoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val id = arguments?.getLong(getString(R.string.arg_id), 0)
-        if (id != null && id != 0L) {
-            mIsEditMode = true
-            getStore(id)
-        } else {
-            Toast.makeText(activity, id.toString(), Toast.LENGTH_SHORT).show()
-        }
 
         mActivity = activity as? MainActivity
         mActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -81,6 +74,14 @@ class FormStoreFragment : Fragment() {
                 mActivity?.onBackPressedDispatcher?.onBackPressed()
             }
         }
+
+        val id = arguments?.getLong(getString(R.string.arg_id), 0)
+        if (id != null && id != 0L) {
+            mIsEditMode = true
+            getStore(id)
+        } else {
+            Toast.makeText(activity, id.toString(), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getStore(id: Long) {
@@ -96,18 +97,14 @@ class FormStoreFragment : Fragment() {
 
     private fun setUIStore(store: StoreEntity) {
         with(mBinding) {
-            etName.setText(store.name)
-            etPhone.setText(store.phone)
-            etWebsite.setText(store.website)
-            etPhotoUrl.setText(store.imageURL)
+            etName.text = store.name.editable()
+            etPhone.text = store.phone.editable()
+            etWebsite.text = store.website.editable()
+            etPhotoUrl.text = store.imageURL.editable()
         }
-
-        Glide.with(this)
-            .load(store.imageURL)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .centerCrop()
-            .into(mBinding.ivPhoto)
     }
+
+    private fun String.editable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save, menu)
