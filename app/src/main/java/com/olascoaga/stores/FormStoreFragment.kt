@@ -52,26 +52,37 @@ class FormStoreFragment : Fragment() {
         }
 
         mBinding.btnSave.setOnClickListener {
-            val store = StoreEntity(
-                name =  mBinding.etName.text.toString().trim(),
-                phone = mBinding.etPhone.text.toString().trim(),
-                website = mBinding.etWebsite.text.toString().trim(),
-                imageURL = mBinding.etPhotoUrl.text.toString().trim()
-            )
+            if (mStoreEntity != null) {
+                with(mStoreEntity!!) {
+                    name =  mBinding.etName.text.toString().trim()
+                    phone = mBinding.etPhone.text.toString().trim()
+                    website = mBinding.etWebsite.text.toString().trim()
+                    imageURL = mBinding.etPhotoUrl.text.toString().trim()
+                }
 
-            val queue = LinkedBlockingQueue<Long?>()
-            Thread {
-                val storeId = StoreApplication.database.storeDao().addStore(store)
-                queue.add(storeId)
-            }.start()
+                val queue = LinkedBlockingQueue<StoreEntity>()
+                Thread {
+                    if (mIsEditMode) {
+                        StoreApplication.database.storeDao().updateStore(mStoreEntity!!)
+                    } else {
+                        mStoreEntity!!.id = StoreApplication.database.storeDao().addStore(mStoreEntity!!)
+                    }
+                    queue.add(mStoreEntity)
+                }.start()
 
-            queue.take()?.let {
-                store.id = it
-                mActivity?.addStore(store)
-                hideKeyboard()
-                Toast.makeText(mActivity, R.string.form_store_message_success, Toast.LENGTH_SHORT).show()
+                with(queue.take()) {
+                    hideKeyboard()
+                    if (mIsEditMode) {
+                        mActivity?.updateStore(mStoreEntity!!)
 
-                mActivity?.onBackPressedDispatcher?.onBackPressed()
+                        Snackbar.make(mBinding.root, R.string.form_store_message_success, Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        mActivity?.addStore(this)
+                        Toast.makeText(mActivity, R.string.form_store_message_success, Toast.LENGTH_SHORT).show()
+
+                        mActivity?.onBackPressedDispatcher?.onBackPressed()
+                    }
+                }
             }
         }
 
@@ -80,7 +91,12 @@ class FormStoreFragment : Fragment() {
             mIsEditMode = true
             getStore(id)
         } else {
-            Toast.makeText(activity, id.toString(), Toast.LENGTH_SHORT).show()
+            mIsEditMode = false
+            mStoreEntity = StoreEntity(
+                name = "",
+                phone = "",
+                imageURL =  ""
+            )
         }
     }
 
