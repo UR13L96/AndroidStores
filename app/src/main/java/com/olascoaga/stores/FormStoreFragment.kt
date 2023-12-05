@@ -52,7 +52,7 @@ class FormStoreFragment : Fragment() {
         }
 
         mBinding.btnSave.setOnClickListener {
-            if (mStoreEntity != null) {
+            if (mStoreEntity != null && validateFields()) {
                 with(mStoreEntity!!) {
                     name =  mBinding.etName.text.toString().trim()
                     phone = mBinding.etPhone.text.toString().trim()
@@ -98,6 +98,28 @@ class FormStoreFragment : Fragment() {
                 imageURL =  ""
             )
         }
+    }
+
+    private fun validateFields(): Boolean {
+        var isValid: Boolean = true
+
+        if (mBinding.etPhotoUrl.text.toString().isBlank()) {
+            mBinding.tilPhotoUrl.error = getString(R.string.helper_required)
+            mBinding.etPhotoUrl.requestFocus()
+            isValid = false
+        }
+        if (mBinding.etPhone.text.toString().isBlank()) {
+            mBinding.tilPhone.error = getString(R.string.helper_required)
+            mBinding.etPhone.requestFocus()
+            isValid = false
+        }
+        if (mBinding.etName.text.toString().isBlank()) {
+            mBinding.tilName.error = getString(R.string.helper_required)
+            mBinding.etName.requestFocus()
+            isValid = false
+        }
+
+        return isValid
     }
 
     private fun getStore(id: Long) {
