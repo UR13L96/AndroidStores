@@ -17,6 +17,7 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.olascoaga.stores.databinding.FragmentFormStoreBinding
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -52,7 +53,7 @@ class FormStoreFragment : Fragment() {
         }
 
         mBinding.btnSave.setOnClickListener {
-            if (mStoreEntity != null && validateFields()) {
+            if (mStoreEntity != null && validateFields(mBinding.tilPhotoUrl, mBinding.tilPhone, mBinding.tilName)) {
                 with(mStoreEntity!!) {
                     name =  mBinding.etName.text.toString().trim()
                     phone = mBinding.etPhone.text.toString().trim()
@@ -100,23 +101,18 @@ class FormStoreFragment : Fragment() {
         }
     }
 
-    private fun validateFields(): Boolean {
-        var isValid: Boolean = true
+    private fun validateFields(vararg textFields: TextInputLayout): Boolean {
+        var isValid = true
 
-        if (mBinding.etPhotoUrl.text.toString().isBlank()) {
-            mBinding.tilPhotoUrl.error = getString(R.string.helper_required)
-            mBinding.etPhotoUrl.requestFocus()
-            isValid = false
+        for (textField in textFields) {
+            if (textField.editText?.text.toString().isBlank()) {
+                textField.error = getString(R.string.helper_required)
+                isValid = false
+            }
         }
-        if (mBinding.etPhone.text.toString().isBlank()) {
-            mBinding.tilPhone.error = getString(R.string.helper_required)
-            mBinding.etPhone.requestFocus()
-            isValid = false
-        }
-        if (mBinding.etName.text.toString().isBlank()) {
-            mBinding.tilName.error = getString(R.string.helper_required)
-            mBinding.etName.requestFocus()
-            isValid = false
+
+        if (!isValid) {
+            Snackbar.make(mBinding.root, getString(R.string.form_store_message_invalid), Snackbar.LENGTH_SHORT).show()
         }
 
         return isValid
