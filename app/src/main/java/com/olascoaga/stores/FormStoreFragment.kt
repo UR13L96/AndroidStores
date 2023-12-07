@@ -99,6 +99,16 @@ class FormStoreFragment : Fragment() {
                 imageURL =  ""
             )
         }
+
+        mBinding.etName.addTextChangedListener {
+            validateFields(mBinding.tilName)
+        }
+        mBinding.etPhone.addTextChangedListener {
+            validateFields(mBinding.tilPhone)
+        }
+        mBinding.etPhotoUrl.addTextChangedListener {
+            validateFields(mBinding.tilPhotoUrl)
+        }
     }
 
     private fun validateFields(vararg textFields: TextInputLayout): Boolean {
@@ -108,6 +118,8 @@ class FormStoreFragment : Fragment() {
             if (textField.editText?.text.toString().isBlank()) {
                 textField.error = getString(R.string.helper_required)
                 isValid = false
+            } else {
+                textField.error = null
             }
         }
 
