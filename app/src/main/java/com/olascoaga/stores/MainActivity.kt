@@ -73,7 +73,7 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
             queue.add(storeEntity)
         }.start()
 
-        mAdapter.update(queue.take())
+        updateStore(queue.take())
     }
 
     override fun onDeleteClicked(storeEntity: StoreEntity) {

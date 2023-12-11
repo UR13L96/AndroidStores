@@ -38,12 +38,6 @@ class FormStoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mActivity = activity as? MainActivity
-        mActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mActivity?.supportActionBar?.title = getString(R.string.form_store_title_add)
-
-        setHasOptionsMenu(true)
-
         mBinding.btnSave.setOnClickListener {
             if (mStoreEntity != null && validateFields(mBinding.tilPhotoUrl, mBinding.tilPhone, mBinding.tilName)) {
                 with(mStoreEntity!!) {
@@ -92,7 +86,18 @@ class FormStoreFragment : Fragment() {
             )
         }
 
+        setupActionBar()
         setupListeners()
+    }
+
+    private fun setupActionBar() {
+        mActivity = activity as? MainActivity
+        mActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mActivity?.supportActionBar?.title =
+            if (mIsEditMode) getString(R.string.form_store_title_add)
+            else getString(R.string.form_store_title_edit)
+
+        setHasOptionsMenu(true)
     }
 
     private fun setupListeners() {
