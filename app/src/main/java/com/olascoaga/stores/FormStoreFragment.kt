@@ -44,14 +44,6 @@ class FormStoreFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        mBinding.etPhotoUrl.addTextChangedListener {
-            Glide.with(this)
-                .load(mBinding.etPhotoUrl.text.toString().trim())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(mBinding.ivPhoto)
-        }
-
         mBinding.btnSave.setOnClickListener {
             if (mStoreEntity != null && validateFields(mBinding.tilPhotoUrl, mBinding.tilPhone, mBinding.tilName)) {
                 with(mStoreEntity!!) {
@@ -100,15 +92,30 @@ class FormStoreFragment : Fragment() {
             )
         }
 
-        mBinding.etName.addTextChangedListener {
-            validateFields(mBinding.tilName)
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        with(mBinding) {
+            etName.addTextChangedListener {
+                validateFields(tilName)
+            }
+            etPhone.addTextChangedListener {
+                validateFields(tilPhone)
+            }
+            etPhotoUrl.addTextChangedListener {
+                validateFields(tilPhotoUrl)
+                loadImage(it.toString().trim())
+            }
         }
-        mBinding.etPhone.addTextChangedListener {
-            validateFields(mBinding.tilPhone)
-        }
-        mBinding.etPhotoUrl.addTextChangedListener {
-            validateFields(mBinding.tilPhotoUrl)
-        }
+    }
+
+    private fun loadImage(url: String) {
+        Glide.with(this)
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
+            .into(mBinding.ivPhoto)
     }
 
     private fun validateFields(vararg textFields: TextInputLayout): Boolean {
