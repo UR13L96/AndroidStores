@@ -1,6 +1,8 @@
 package com.olascoaga.stores
 
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -95,15 +97,23 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
             .show()
     }
 
+    private fun onDialClicked(phone: String) {
+        val dialIntent = Intent().apply {
+            action = Intent.ACTION_DIAL
+            data = Uri.parse("tel:$phone")
+        }
+        startActivity(dialIntent)
+    }
+
     override fun onLongClicked(storeEntity: StoreEntity) {
-        val items = arrayOf("Delete", "Call", "Go website")
+        val items = arrayOf("Delete", "Dial", "Go website")
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.options_dialog_title)
             .setItems(items) { _, i ->
                 when (i) {
                     0 -> onDeleteClicked(storeEntity)
-                    1 -> Toast.makeText(this, "Will call", Toast.LENGTH_SHORT).show()
+                    1 -> onDialClicked(storeEntity.phone)
                     2 -> Toast.makeText(this, "Will go website", Toast.LENGTH_SHORT).show()
                 }
             }.show()
