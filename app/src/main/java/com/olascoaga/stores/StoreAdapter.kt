@@ -80,7 +80,7 @@ class StoreAdapter(
                 }
 
                 binding.root.setOnLongClickListener {
-                    listener.onDeleteClicked(storeEntity)
+                    listener.onLongClicked(storeEntity)
                     true
                 }
             }

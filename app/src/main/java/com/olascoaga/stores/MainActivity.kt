@@ -3,6 +3,7 @@ package com.olascoaga.stores
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olascoaga.stores.databinding.ActivityMainBinding
@@ -78,7 +79,7 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
         updateStore(queue.take())
     }
 
-    override fun onDeleteClicked(storeEntity: StoreEntity) {
+    private fun onDeleteClicked(storeEntity: StoreEntity) {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.delete_dialog_title)
             .setPositiveButton(R.string.delete_dialog_confirm) { _, _ ->
@@ -92,6 +93,20 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
             }
             .setNegativeButton(R.string.delete_dialog_cancel, null)
             .show()
+    }
+
+    override fun onLongClicked(storeEntity: StoreEntity) {
+        val items = arrayOf("Delete", "Call", "Go website")
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.options_dialog_title)
+            .setItems(items) { _, i ->
+                when (i) {
+                    0 -> onDeleteClicked(storeEntity)
+                    1 -> Toast.makeText(this, "Will call", Toast.LENGTH_SHORT).show()
+                    2 -> Toast.makeText(this, "Will go website", Toast.LENGTH_SHORT).show()
+                }
+            }.show()
     }
 
     /*
