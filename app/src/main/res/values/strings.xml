@@ -16,4 +16,7 @@
     <string name="arg_id">arg_id</string>
     <string name="form_store_message_invalid">There\'s empty required fields</string>
     <string name="form_store_title_edit">Edit store</string>
+    <string name="delete_dialog_title">Delete store?</string>
+    <string name="delete_dialog_confirm">Delete</string>
+    <string name="delete_dialog_cancel">Cancel</string>
 </resources>

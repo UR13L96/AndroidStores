@@ -1,8 +1,10 @@
 package com.olascoaga.stores
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.olascoaga.stores.databinding.ActivityMainBinding
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -77,13 +79,19 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
     }
 
     override fun onDeleteClicked(storeEntity: StoreEntity) {
-        val queue = LinkedBlockingQueue<StoreEntity>()
-        Thread {
-            StoreApplication.database.storeDao().deleteStore(storeEntity)
-            queue.add(storeEntity)
-        }.start()
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.delete_dialog_title)
+            .setPositiveButton(R.string.delete_dialog_confirm) { _, _ ->
+                val queue = LinkedBlockingQueue<StoreEntity>()
+                Thread {
+                    StoreApplication.database.storeDao().deleteStore(storeEntity)
+                    queue.add(storeEntity)
+                }.start()
 
-        mAdapter.delete(queue.take())
+                mAdapter.delete(queue.take())
+            }
+            .setNegativeButton(R.string.delete_dialog_cancel, null)
+            .show()
     }
 
     /*
