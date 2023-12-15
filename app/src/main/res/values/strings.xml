@@ -20,4 +20,5 @@
     <string name="delete_dialog_confirm">Delete</string>
     <string name="delete_dialog_cancel">Cancel</string>
     <string name="options_dialog_title">Select an option:</string>
+    <string name="main_error_no_website">Empty website</string>
 </resources>

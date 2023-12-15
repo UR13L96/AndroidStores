@@ -105,6 +105,20 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
         startActivity(dialIntent)
     }
 
+    private fun onWebsiteClicked(url: String) {
+        if (url.isEmpty()) {
+            Toast.makeText(this, R.string.main_error_no_website, Toast.LENGTH_LONG).show()
+        } else {
+            val websiteIntent = Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse(url)
+            }
+
+            startActivity(websiteIntent)
+        }
+
+    }
+
     override fun onLongClicked(storeEntity: StoreEntity) {
         val items = arrayOf("Delete", "Dial", "Go website")
 
@@ -114,7 +128,7 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
                 when (i) {
                     0 -> onDeleteClicked(storeEntity)
                     1 -> onDialClicked(storeEntity.phone)
-                    2 -> Toast.makeText(this, "Will go website", Toast.LENGTH_SHORT).show()
+                    2 -> onWebsiteClicked(storeEntity.website)
                 }
             }.show()
     }
