@@ -102,7 +102,12 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
             action = Intent.ACTION_DIAL
             data = Uri.parse("tel:$phone")
         }
-        startActivity(dialIntent)
+
+        if (dialIntent.resolveActivity(packageManager) != null) {
+            startActivity(dialIntent)
+        } else {
+            Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun onWebsiteClicked(url: String) {
@@ -114,7 +119,11 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
                 data = Uri.parse(url)
             }
 
-            startActivity(websiteIntent)
+            if (websiteIntent.resolveActivity(packageManager) != null) {
+                startActivity(websiteIntent)
+            } else {
+                Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
+            }
         }
 
     }
