@@ -103,11 +103,7 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
             data = Uri.parse("tel:$phone")
         }
 
-        if (dialIntent.resolveActivity(packageManager) != null) {
-            startActivity(dialIntent)
-        } else {
-            Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
-        }
+        validateAndStartIntent(dialIntent)
     }
 
     private fun onWebsiteClicked(url: String) {
@@ -119,17 +115,20 @@ class MainActivity: AppCompatActivity(), OnClickListener, MainAux   {
                 data = Uri.parse(url)
             }
 
-            if (websiteIntent.resolveActivity(packageManager) != null) {
-                startActivity(websiteIntent)
-            } else {
-                Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
-            }
+            validateAndStartIntent(websiteIntent)
         }
+    }
 
+    private fun validateAndStartIntent(intent: Intent) {
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, R.string.main_error_no_resolve, Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onLongClicked(storeEntity: StoreEntity) {
-        val items = arrayOf("Delete", "Dial", "Go website")
+        val items = resources.getStringArray(R.array.array_store_options)
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.options_dialog_title)
