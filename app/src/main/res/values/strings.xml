@@ -22,4 +22,8 @@
     <string name="options_dialog_title">Select an option:</string>
     <string name="main_error_no_website">Empty website</string>
     <string name="main_error_no_resolve">No compatible app was found</string>
+    <string name="store_option_delete">Delete</string>
+    <string name="store_option_dial">Dial</string>
+    <string name="store_option_go_website">Go website</string>
+
 </resources>
