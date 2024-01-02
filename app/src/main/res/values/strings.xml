@@ -1,9 +1,7 @@
 <resources>
-    <string name="app_name">Tiendas</string>
+    <string name="app_name">Stores</string>
     <string name="description_iv_photo_store">Store\'s image</string>
     <string name="description_add_store">Add store</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hint_name">Name</string>
     <string name="helper_required">Required</string>
     <string name="hint_phone">Phone</string>
@@ -13,7 +11,7 @@
     <string name="menu_save">Save</string>
     <string name="save">Save</string>
     <string name="form_store_message_success">Store saved correctly</string>
-    <string name="arg_id">arg_id</string>
+    <string name="arg_id" translatable="false">arg_id</string>
     <string name="form_store_message_invalid">There\'s empty required fields</string>
     <string name="form_store_title_edit">Edit store</string>
     <string name="delete_dialog_title">Delete store?</string>
@@ -25,5 +23,4 @@
     <string name="store_option_delete">Delete</string>
     <string name="store_option_dial">Dial</string>
     <string name="store_option_go_website">Go website</string>
-
 </resources>
