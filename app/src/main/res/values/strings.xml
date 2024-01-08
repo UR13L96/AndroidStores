@@ -23,4 +23,7 @@
     <string name="store_option_delete">Delete</string>
     <string name="store_option_dial">Dial</string>
     <string name="store_option_go_website">Go website</string>
+    <string name="exit_dialog_title">Are you sure you want to leave?</string>
+    <string name="exit_dialog_message">Unsaved changes will be lost</string>
+    <string name="exit_dialog_ok">Exit</string>
 </resources>

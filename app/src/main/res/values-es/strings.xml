@@ -23,4 +23,7 @@
     <string name="store_option_delete">Eliminar</string>
     <string name="store_option_dial">Llamar</string>
     <string name="store_option_go_website">Ir al sitio web</string>
+    <string name="exit_dialog_title">¿Estás seguro que deseas salir?</string>
+    <string name="exit_dialog_message">Los cambios sin guardar se perderán</string>
+    <string name="exit_dialog_ok">Salir</string>
 </resources>

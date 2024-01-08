@@ -13,9 +13,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethod
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.olascoaga.stores.databinding.FragmentFormStoreBinding
@@ -67,7 +69,7 @@ class FormStoreFragment : Fragment() {
                         mActivity?.addStore(this)
                         Toast.makeText(mActivity, R.string.form_store_message_success, Toast.LENGTH_SHORT).show()
 
-                        mActivity?.onBackPressedDispatcher?.onBackPressed()
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
                     }
                 }
             }
@@ -164,6 +166,26 @@ class FormStoreFragment : Fragment() {
 
     private fun String.editable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                MaterialAlertDialogBuilder(requireActivity())
+                    .setTitle(R.string.exit_dialog_title)
+                    .setMessage(R.string.exit_dialog_message)
+                    .setPositiveButton(R.string.exit_dialog_ok) { _, _ ->
+                        if (isEnabled) {
+                            isEnabled = false
+                            requireActivity().onBackPressedDispatcher.onBackPressed()
+                        }
+                    }
+                    .setNegativeButton(R.string.delete_dialog_cancel, null)
+                    .show()
+            }
+        })
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_save, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -172,7 +194,7 @@ class FormStoreFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             android.R.id.home -> {
-                mActivity?.onBackPressed()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
                 true
             }
             R.id.action_save -> {
@@ -195,7 +217,7 @@ class FormStoreFragment : Fragment() {
                     hideKeyboard()
                     Toast.makeText(mActivity, R.string.form_store_message_success, Toast.LENGTH_SHORT).show()
 
-                    mActivity?.onBackPressedDispatcher?.onBackPressed()
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
                 true
             }
